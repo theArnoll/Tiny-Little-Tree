@@ -46,7 +46,6 @@ void write(short array[4]){
         }
         myfile.close();
     }
-    printf("Saved\n");
 }
 
 int main()
@@ -76,7 +75,7 @@ int main()
                 {
                     if(storage[1] - storage[2] >= 0)
                     {
-                        if (daynow != storage[3])  //v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v
+                        if (daynow != storage[3])
                         {
                             storage[0] ++;
                             storage[1] -= storage[2];
