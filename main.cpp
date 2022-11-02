@@ -4,6 +4,7 @@
 #include<iostream>
 #include"mulsys.h"
 #include<ctime>
+#include<random>
 
 using namespace std;
 
@@ -65,7 +66,7 @@ int main()
         
         if (daynow - storage[3] <= 31)
         {
-            printf("\"grow\" to grow your tree | \"loremipsum\" to get a drip of water. | \"esc\" to exit\n\n Your tree is now %dmm high,\n Which is %.1fcm high.\n You have now %d drip of water,\n And your tree need %d drip of water to grow.\n ", storage[0], storage[0] / 10.0, storage[1], storage[2]);
+            printf("\"grow\" to grow your tree | \"loremipsum\" to get a drip of water. | \"getmore\" to get 5 drips of water. | \"esc\" to exit\n\n Your tree is now %dmm high,\n Which is %.1fcm high.\n You have now %d drip of water,\n And your tree need %d drip of water to grow.\n ", storage[0], storage[0] / 10.0, storage[1], storage[2]);
             
             while (run)
             {
@@ -75,13 +76,13 @@ int main()
                 {
                     if(storage[1] - storage[2] >= 0)
                     {
-                        if (daynow != storage[3])
+                        if (daynow != storage[3])  //v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v
                         {
                             storage[0] ++;
                             storage[1] -= storage[2];
                             storage[3] = now->tm_mday;
                             clearscr();
-                            printf("\"grow\" to grow your tree | \"loremipsum\" to get a drip of water. | \"esc\" to exit\n\n Your tree is now %dmm high,\n Which is %.1fcm high.\n You have now %d drip of water,\n And your tree need %d drip of water to grow.\n ", storage[0], storage[0] / 10.0, storage[1], storage[2]);
+                            printf("\"grow\" to grow your tree | \"loremipsum\" to get a drip of water. | \"getmore\" to get 5 drips of water. | \"esc\" to exit\n\n Your tree is now %dmm high,\n Which is %.1fcm high.\n You have now %d drip of water,\n And your tree need %d drip of water to grow.\n ", storage[0], storage[0] / 10.0, storage[1], storage[2]);
                         }
                         else
                         {
@@ -89,22 +90,46 @@ int main()
                         }
                     }
                     else
-                        printf(" You don't have enough water. Type \"loremipsum\" to get a drip of water.\n ");
+                        printf(" You don't have enough water. Type \"loremipsum\" to get a drip of water, or type \"getmore\" to get 5 drips of water.\n ");
                 }
                 if (in == "loremipsum")
                 {
                     storage[1] ++;
 
                     clearscr();
-                    printf("\"grow\" to grow your tree | \"loremipsum\" to get a drip of water. | \"esc\" to exit\n\n Your tree is now %dmm high,\n Which is %.1fcm high.\n You have now %d drip of water,\n And your tree need %d drip of water to grow.\n ", storage[0], storage[0] / 10.0, storage[1], storage[2]);
+                    printf("\"grow\" to grow your tree | \"loremipsum\" to get a drip of water. | \"getmore\" to get 5 drips of water. | \"esc\" to exit\n\n Your tree is now %dmm high,\n Which is %.1fcm high.\n You have now %d drip of water,\n And your tree need %d drip of water to grow.\n ", storage[0], storage[0] / 10.0, storage[1], storage[2]);
                 }
-                if (in == "loremipsumdolorsitelit")
+                if (in == "getmore")
                 {
-                    storage[1] ++;
-                    storage[1] ++;
+                    ifstream getmore (".\\dontopenthisfile.dontopenthis");
+                    string temp, opts[30] = {""};
+                    uint8_t count = 0;
+                    if (getmore.is_open())
+                    {
+                        while (getline(getmore,temp))
+                        {
+                            opts[count] = temp;
+                            count++;
+                        }
+                        getmore.close();
+                    }
+                    else printf("Some error happened...");
+                    srand(time(NULL));
+                    uint8_t opt = rand() % (count - 1);
+                    clearscr();
+                    cout << " Please type this sentence.\n Caution: CaSe SeNsItIvE, more or less spaces is not allowed.\n\n " << opts[opt] << endl << " ";
+                    string sentenceInput;
+                    std::getline(cin>>ws, sentenceInput); //https://stackoverflow.com/a/5838803
+                    if(sentenceInput == opts[opt])
+                        storage[1] += 5;
+                    else
+                    {
+                        printf("The sentence you typed is not same as the requested sentence. Please try again.");
+                        crosscmd("pause>nul", "pause", "pause");
+                    }
 
                     clearscr();
-                    printf("\"grow\" to grow your tree | \"loremipsum\" to get a drip of water. | \"esc\" to exit\n\n Your tree is now %dmm high,\n Which is %.1fcm high.\n You have now %d drip of water,\n And your tree need %d drip of water to grow.\n ", storage[0], storage[0] / 10.0, storage[1], storage[2]);
+                    printf("\"grow\" to grow your tree | \"loremipsum\" to get a drip of water. | \"getmore\" to get 5 drips of water. | \"esc\" to exit\n\n Your tree is now %dmm high,\n Which is %.1fcm high.\n You have now %d drip of water,\n And your tree need %d drip of water to grow.\n ", storage[0], storage[0] / 10.0, storage[1], storage[2]);
                 }
                 if (in == "esc")
                 {
@@ -126,7 +151,6 @@ int main()
                     storage[re] = a[re];
                 }
                 
-
                 printf(" OK, here you go.\n *Plants a new tree*\n Take care!\n Press space to close this window. You can manually open this game by your self or reboot your computer.");
                 wincmd("pause>nul");
             }
